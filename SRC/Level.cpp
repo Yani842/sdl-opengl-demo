@@ -41,7 +41,7 @@ void Level::update(float dt)
 
 void LevelStart::init(SDL_Renderer* renderer)
 {
-    render.init(renderer);
+    render.levelStartInit(renderer);
 
     shared_ptr<Object> pl (new Player());
     _all.add(pl);
@@ -49,28 +49,28 @@ void LevelStart::init(SDL_Renderer* renderer)
     _top.add(pl);
     pl->init();
 
-    shared_ptr<Object> gr1 (new NoLogicObject(grass1, 0, 200, 60, 60));
+    shared_ptr<Object> gr1 (new NoLogicObject(3, 0, 200, 60, 60));
     _all.add(gr1);
     _ground.add(gr1);
-    shared_ptr<Object> gr2 (new NoLogicObject(grass2, 60, 200, 60, 60));
+    shared_ptr<Object> gr2 (new NoLogicObject(4, 60, 200, 60, 60));
     _all.add(gr2);
     _ground.add(gr2);
-    shared_ptr<Object> gr3 (new NoLogicObject(grass3, 120, 200, 60, 60));
+    shared_ptr<Object> gr3 (new NoLogicObject(5, 120, 200, 60, 60));
     _all.add(gr3);
     _ground.add(gr3);
-    shared_ptr<Object> gr4 (new NoLogicObject(grass4, 180, 200, 60, 60));
+    shared_ptr<Object> gr4 (new NoLogicObject(6, 180, 200, 60, 60));
     _all.add(gr4);
     _ground.add(gr4);
-    shared_ptr<Object> gr5 (new NoLogicObject(grass5, 240, 200, 60, 60));
+    shared_ptr<Object> gr5 (new NoLogicObject(7, 240, 200, 60, 60));
     _all.add(gr5);
     _ground.add(gr5);
-    shared_ptr<Object> gr6 (new NoLogicObject(grassWithWater, 300, 200, 60, 60));
+    shared_ptr<Object> gr6 (new NoLogicObject(8, 300, 200, 60, 60));
     _all.add(gr6);
     _ground.add(gr6);
-    shared_ptr<Object> tr1 (new NoLogicObject(tree1, 100, 200, 45*4, 75*4));
+    shared_ptr<Object> tr1 (new NoLogicObject(9, 100, 200, 45*4, 75*4));
     _all.add(tr1);
     _foliage.add(tr1);
-    shared_ptr<Object> tr2 (new NoLogicObject(tree2, 300, 200, 45*4, 75*4));
+    shared_ptr<Object> tr2 (new NoLogicObject(10, 300, 200, 45*4, 75*4));
     _all.add(tr2);
     _foliage.add(tr2);
 }

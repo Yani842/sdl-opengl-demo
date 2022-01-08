@@ -1,10 +1,5 @@
 #include "Game.h"
 
-Render::Render()
-{
-
-}
-
 SDL_Texture* Render::loadTexture(const char* path)
 {
     string strPath = "Data/Images/";
@@ -25,9 +20,10 @@ void Render::addAnimation(float rate, initializer_list<SDL_Texture*> textures, b
     animations.push_back(an);
 }
 
-void Render::init(SDL_Renderer* ren)
+void Render::levelStartInit(SDL_Renderer* ren)
 {
     renderer = ren;
+    animations.clear();
     addAnimation(0, {loadTexture("ghost/idle-1.png")}, true);
     addAnimation(0, {loadTexture("ghost/left-1.png")}, true);
     addAnimation(0, {loadTexture("ghost/right-1.png")}, true);

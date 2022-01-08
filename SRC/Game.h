@@ -8,18 +8,18 @@
 #include <initializer_list>
 using namespace std;
 
-enum AnimationEnum {playerIdle=0, playerLeft=1, playerRight=2, grass1=3, grass2=4, grass3=5, grass4=6, grass5=7, grassWithWater=8, tree1=9, tree2=10};
+//enum AnimationEnum {playerIdle=0, playerLeft=1, playerRight=2, grass1=3, grass2=4, grass3=5, grass4=6, grass5=7, grassWithWater=8, tree1=9, tree2=10};
 
 struct AnimationState
 {
     SDL_Rect rect;
-    AnimationEnum animation;
+    int animation;
     int currentFrame;
     float pointInRate;
     bool animationEnded = false;
-    void inline setAnimation(AnimationEnum an)
+    void inline setAnimation(int an)
     {animation = an; pointInRate=0; currentFrame=0;}
-    void inline setAnimationSameFrame(AnimationEnum an)
+    void inline setAnimationSameFrame(int an)
     {animation = an;}
     bool inline didAnimationEnded()
     {return animationEnded;}
@@ -53,10 +53,9 @@ private:
     SDL_Texture* loadTexture(const char* path);
     void addAnimation(float rate, initializer_list<SDL_Texture*> textures, bool noAnimation=false, bool oneCycle=false);
 public:
-    Render();
-    void init(SDL_Renderer* renderer); // import animations
-    void update(float dt, vector<shared_ptr<Object>>* objects); // update object's states
-    void render(vector<shared_ptr<Object>>* objects); // draw by object's state
+    void levelStartInit(SDL_Renderer* renderer);
+    void update(float dt, vector<shared_ptr<Object>>* objects);
+    void render(vector<shared_ptr<Object>>* objects);
 };
 
 struct ObjectList
@@ -103,9 +102,9 @@ public:
 
 class NoLogicObject : public Object
 {
-    AnimationEnum an;
+    int an;
 public:
-    NoLogicObject(AnimationEnum an, int x, int y, int h, int w);
+    NoLogicObject(int an, int x, int y, int h, int w);
 };
 
 class Game
