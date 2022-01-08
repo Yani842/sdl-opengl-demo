@@ -20,9 +20,13 @@ void Render::addAnimation(float rate, initializer_list<SDL_Texture*> textures, b
     animations.push_back(an);
 }
 
-void Render::levelStartInit(SDL_Renderer* ren)
+void Render::init(SDL_Renderer* ren)
 {
     renderer = ren;
+}
+
+void Render::levelStartLoadAnimations()
+{
     animations.clear();
     addAnimation(0, {loadTexture("ghost/idle-1.png")}, true);
     addAnimation(0, {loadTexture("ghost/left-1.png")}, true);

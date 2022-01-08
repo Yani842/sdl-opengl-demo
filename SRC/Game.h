@@ -53,7 +53,8 @@ private:
     SDL_Texture* loadTexture(const char* path);
     void addAnimation(float rate, initializer_list<SDL_Texture*> textures, bool noAnimation=false, bool oneCycle=false);
 public:
-    void levelStartInit(SDL_Renderer* renderer);
+    void init(SDL_Renderer* renderer);
+    void levelStartLoadAnimations();
     void update(float dt, vector<shared_ptr<Object>>* objects);
     void render(vector<shared_ptr<Object>>* objects);
 };
