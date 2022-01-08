@@ -25,10 +25,7 @@ void Level::remove(shared_ptr<Object> obj)
     // if there will be more lists add them here
 }
 
-void Level::init(SDL_Renderer* renderer)
-{
-    renderer = renderer;
-}
+void Level::init(SDL_Renderer* renderer) {}
 
 void Level::update(float dt)
 {
