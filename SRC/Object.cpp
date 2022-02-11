@@ -5,7 +5,7 @@ Object::~Object() {}
 void Object::init() {}
 void Object::update(float dt) {}
 
-NoLogicObject::NoLogicObject(int an, int x, int y, int h, int w)
+NoLogicObject::NoLogicObject(AnimationEnum an, int x, int y, int h, int w)
 {
     anState.setAnimation(an);
     anState.rect = {x, y, h, w};
