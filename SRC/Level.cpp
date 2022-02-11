@@ -39,7 +39,7 @@ void Level::update(float dt)
 void LevelStart::init(SDL_Renderer* renderer)
 {
     render.init(renderer);
-    render.levelStartLoadAnimations();
+    render.loadAnimations();
     
     shared_ptr<Object> pl (new Player());
     _all.add(pl);

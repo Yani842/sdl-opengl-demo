@@ -83,7 +83,7 @@ private:
 
 public:
     void init(SDL_Renderer *renderer);
-    void levelStartLoadAnimations();
+    void loadAnimations();
     void update(float dt, vector<shared_ptr<Object>> *objects);
     void render(vector<shared_ptr<Object>> *objects);
 };

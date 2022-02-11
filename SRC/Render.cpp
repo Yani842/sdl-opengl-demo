@@ -25,7 +25,7 @@ void Render::init(SDL_Renderer* ren)
     renderer = ren;
 }
 
-void Render::levelStartLoadAnimations()
+void Render::loadAnimations()
 {
     animations.clear();
     addAnimation(0, {loadTexture("ghost/idle-1.png")}, true);
