@@ -2,8 +2,8 @@
 
 int main(int argc, char *args[])
 {
-    Game game;
-    game.init();
-    game.mainLoop();
+    Level level;
+    level.init("attempting to add opengl", 1024, 768);
+    level.run();
     return 0;
 }

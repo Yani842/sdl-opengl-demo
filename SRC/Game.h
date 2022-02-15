@@ -2,12 +2,12 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <vector>
 #include <memory>
 #include <algorithm>
 #include <iostream>
 #include <initializer_list>
+#include "Shader.h"
 using namespace std;
 
 enum AnimationEnum
@@ -25,9 +25,27 @@ enum AnimationEnum
     tree2
 };
 
+struct vertex
+{
+    struct pos
+    {
+        float x;
+        float y;
+        float z;
+    } pos;
+    struct texCoords
+    {
+        float x;
+        float y;
+    } tex;
+};
 struct AnimationState
 {
-    SDL_Rect rect;
+private:
+
+public:
+    vertex vertices[4];
+
     AnimationEnum animation;
     int currentFrame;
     float pointInRate;
@@ -46,13 +64,6 @@ struct AnimationState
     {
         return animationEnded;
     }
-    void inline setRect(int x, int y, int w = 24, int h = 24)
-    {
-        rect.x = x;
-        rect.y = y;
-        rect.w = w;
-        rect.h = h;
-    }
 };
 
 class Object : public enable_shared_from_this<Object>
@@ -67,7 +78,7 @@ public:
 
 struct Animation
 {
-    vector<SDL_Texture *> textures;
+    vector<unsigned int> textures;
     float rate;
     bool noAnimation = false;
     bool oneCycle = false;
@@ -76,16 +87,22 @@ struct Animation
 class Render
 {
 private:
+    unsigned int VAO, EBO;
+    unsigned int VBOs[255] = {0};
+    Shader shader;
+    vector<shared_ptr<Object>> *layers[255];
     vector<Animation> animations;
-    SDL_Renderer *renderer;
-    SDL_Texture *loadTexture(const char *path);
-    void addAnimation(float rate, initializer_list<SDL_Texture *> textures, bool noAnimation = false, bool oneCycle = false);
+    unsigned int loadTexture(const char *path);
+    void addAnimation(float rate, initializer_list<unsigned int> textures, bool noAnimation = false, bool oneCycle = false);
 
 public:
-    void init(SDL_Renderer *renderer);
+    Render();
+    void init();
     void loadAnimations();
+    void bind(vector<shared_ptr<Object>> *objects, unsigned char layer);
+    void unbind(unsigned char layer);
     void update(float dt, vector<shared_ptr<Object>> *objects);
-    void render(vector<shared_ptr<Object>> *objects);
+    void render();
 };
 
 struct ObjectList
@@ -100,29 +117,24 @@ class Level
 {
 protected:
     Render render;
-
-public:
     ObjectList _all;
     ObjectList _update;
-    void virtual init(SDL_Renderer *renderer);
-    void virtual update(float dt);
-    void virtual inline draw()
-    {
-        render.render(&_all.objects);
-    }
-    void virtual remove(shared_ptr<Object> obj);
-};
-// to add object to level, call .add(...) to the lists the objects belong to
-
-class LevelStart : public Level
-{
-public:
     ObjectList _foliage;
     ObjectList _ground;
     ObjectList _top;
-    void init(SDL_Renderer *renderer) override;
-    void inline draw() override;
+
+    bool running = true;
+    SDL_Window *window;
+
+    void update(float dt);
+
+public:
+    Level();
+    void init(string title, int width, int height);
+    void run();
+    void remove(shared_ptr<Object> obj);
 };
+// to add object to level, call .add(...) to the lists the objects belong to
 
 class Player : public Object
 {
@@ -140,20 +152,4 @@ class NoLogicObject : public Object
 
 public:
     NoLogicObject(AnimationEnum an, int x, int y, int h, int w);
-};
-
-class Game
-{
-    bool running;
-    SDL_Event event;
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    Uint32 lastUpdate;
-
-public:
-    Game();
-    Level *level;
-    void setLevel(Level *level);
-    void init();
-    void mainLoop();
 };

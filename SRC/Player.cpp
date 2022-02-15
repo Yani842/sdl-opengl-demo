@@ -1,10 +1,18 @@
 #include "Game.h"
 
+// {{0.5f, 0.5f, 0.0f, 1.0f, 1.0f},
+// {0.5f, -0.5f, 0.0f, 1.0f, 0.0f},
+// {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f},
+// {-0.5f, 0.5f, 0.0f, 0.0f, 1.0f}};
+
 void Player::init()
 {
     anState.setAnimation(playerIdle);
-    anState.rect = {200, 200, 60, 81};
-}
+    anState.vertices[0] = {0.5f, 0.5f, 0.0f, 1.0f, 1.0f};
+    anState.vertices[1] = {0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
+    anState.vertices[2] = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f};
+    anState.vertices[3] = {-0.5f, 0.5f, 0.0f, 0.0f, 1.0f};
+};
 
 void Player::update(float dt)
 {
@@ -12,10 +20,10 @@ void Player::update(float dt)
     if (keys[SDL_SCANCODE_D])
     {
         anState.setAnimation(playerRight);
-        anState.rect.x += 3;
+        // !!! set players pos
     } else if (keys[SDL_SCANCODE_A]) {
         anState.setAnimation(playerLeft);
-        anState.rect.x -= 3;
+        // !!! set players pos
     } else {
         anState.setAnimation(playerIdle);
     }
